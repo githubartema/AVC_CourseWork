@@ -68,7 +68,16 @@ def argument_parser():
         action="store_true",
         help="randomly alter the intensities of RGB channels",
     )
-
+    parser.add_argument(
+        "--horizontal-flip",
+        action="store_true",
+        help="",
+    )
+    parser.add_argument(
+        "--two-d-translation",
+        action="store_true",
+        help="",
+    )
     # ************************************************************
     # Optimization options
     # ************************************************************
@@ -264,7 +273,8 @@ def dataset_kwargs(parsed_args):
     Build kwargs for ImageDataManager in data_manager.py from
     the parsed command-line arguments.
     """
-    return {
+
+    d = {
         "source_names": parsed_args.source_names,
         "target_names": parsed_args.target_names,
         "root": parsed_args.root,
@@ -278,7 +288,13 @@ def dataset_kwargs(parsed_args):
         "random_erase": parsed_args.random_erase,
         "color_jitter": parsed_args.color_jitter,
         "color_aug": parsed_args.color_aug,
+        "two_d_translation": parsed_args.two_d_translation,
+        "horizontal_flip": parsed_args.horizontal_flip
     }
+
+    print(d)
+     
+    return d
 
 
 def optimizer_kwargs(parsed_args):

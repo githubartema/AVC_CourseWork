@@ -24,6 +24,8 @@ class BaseDataManager:
         random_erase=False,  # use random erasing for data augmentation
         color_jitter=False,  # randomly change the brightness, contrast and saturation
         color_aug=False,  # randomly alter the intensities of RGB channels
+        two_d_translation=False,
+        horizontal_flip=False,
         num_instances=4,  # number of instances per identity (for RandomIdentitySampler)
         **kwargs,
     ):
@@ -40,6 +42,8 @@ class BaseDataManager:
         self.random_erase = random_erase
         self.color_jitter = color_jitter
         self.color_aug = color_aug
+        self.two_d_translation = two_d_translation
+        self.horizontal_flip = horizontal_flip
         self.num_instances = num_instances
 
         transform_train, transform_test = build_transforms(
@@ -48,6 +52,8 @@ class BaseDataManager:
             random_erase=self.random_erase,
             color_jitter=self.color_jitter,
             color_aug=self.color_aug,
+            two_d_translation=two_d_translation,
+            horizontal_flip=horizontal_flip
         )
         self.transform_train = transform_train
         self.transform_test = transform_test

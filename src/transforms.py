@@ -128,7 +128,9 @@ def build_transforms(
     width,
     random_erase=False,  # use random erasing for data augmentation
     color_jitter=False,  # randomly change the brightness, contrast and saturation
-    color_aug=False,  # randomly alter the intensities of RGB channels
+    color_aug=False,  # randomly alter the intensities of RGB channels,
+    two_d_translation=False,
+    horizontal_flip=False,
     **kwargs
 ):
     # use imagenet mean and std as default
@@ -139,18 +141,29 @@ def build_transforms(
 
     # build train transformations
     transform_train = []
-    transform_train += [Random2DTranslation(height, width)]
-    transform_train += [T.RandomHorizontalFlip()]
+
+    if two_d_translation:
+        transform_train += [Random2DTranslation(height, width)]
+    else:
+        transform_train += [T.Resize((height, width))]
+
+    if horizontal_flip:
+        transform_train += [T.RandomHorizontalFlip()]
+
     if color_jitter:
         transform_train += [
             T.ColorJitter(brightness=0.2, contrast=0.15, saturation=0, hue=0)
         ]
     transform_train += [T.ToTensor()]
+
     if color_aug:
         transform_train += [ColorAugmentation()]
+
     transform_train += [normalize]
+
     if random_erase:
         transform_train += [RandomErasing()]
+
     transform_train = T.Compose(transform_train)
 
     # build test transformations

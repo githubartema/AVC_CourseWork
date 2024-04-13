@@ -3,8 +3,8 @@
 STUDENT_ID=kn00794 STUDENT_NAME="Jane Doe" python main.py \
 -s veri \
 -t veri \
--a mobilenet_v3_small \
---root /content \
+-a vit_b_16 \
+--root ./ \
 --height 224 \
 --width 224 \
 --optim amsgrad \
