@@ -14,7 +14,7 @@ class TorchVisionModel(nn.Module):
         self.loss = loss
         self.backbone = tvmodels.__dict__[name](pretrained=pretrained)
 
-        if name == 'vit_b_16':
+        if name in ['vit_b_16', 'vit_b_32']:
             self.feature_dim = self.backbone.heads[0].in_features
         else:
             self.feature_dim = self.backbone.classifier[0].in_features
